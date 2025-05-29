@@ -2,6 +2,16 @@ This project contains a File upload service and is a [Next.js](https://nextjs.or
 
 ## Getting Started
 
+# Prerequisites
+
+Nodejs
+
+First, install dependencies:
+```bash
+npm install
+```
+
+
 First, run the development server:
 
 ```bash
