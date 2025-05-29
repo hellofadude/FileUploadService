@@ -1,34 +1,41 @@
-"use server"
+"use client"
 
-export default async function handleUpload(currentstate, formData) {
-    let data = new FormData();
-    data.append('file', formData.get("myFile"));
-    let report = "";
+import React from 'react';
+import handleUpload from "./handleUpload"; 
+import { useActionState } from "react";
+
+
+
+export default function Fileupload() {
+  const [state, formAction, isPending] = useActionState(handleUpload, "");
+   
+  return(
+    <>
+     <form action={formAction}>
+          <div style={{display:'block'}}>
+
+               <label>
+                  File to parse:  <input
+                      type='file'
+                      name='myFile' />
+               </label>
+                        
+               <button type="submit">upload</button>       
+               {isPending ? "Loading..." : 
+                 state === "" ? "" : 
+                 <div style={{ border: '1px solid black', padding: '10px', marginTop: '100px' }}>
+                    <h3>Report</h3>
+                       <pre style={{ whiteSpace: 'pre-wrap' }}>{state}</pre>
+                 </div> 
+               }
+         
+          </div>        
+      </form>
   
-    try {
-      // send request to backend and wait for the response
-      response =  await fetch("http://127.0.0.1:8080", {
-          mode: "no-cors",
-          method: "POST",
-          // Data will be serialized and sent as json
-          body: data,
-          // tell the server we're sending JSON
-      }).then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      }).then(data => {
-        console.log('New User Data:', data);
-        report  =  data;
-        
-        
-      }).catch(error => {
-        console.error('Error:', error);
-      })
-    } catch (error) {
-      // an error occured
-    }
+    </>
+  )  
+}
 
-    return report;
-  }
+
+
+  

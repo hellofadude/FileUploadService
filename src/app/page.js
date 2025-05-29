@@ -1,8 +1,8 @@
 
 import Image from "next/image";
 import styles from "./page.module.css";
-import FileuploadService from "./fileUpload";
-import { Suspense } from 'react'
+import FileUpload from "./fileUploadService";
+
 
 function Home() {
   
@@ -13,7 +13,7 @@ function Home() {
         <div className={styles.page}>
          <div>
           <main className={styles.main}>
-            <FileuploadService />
+            <FileUpload />
           
           </main>
         
