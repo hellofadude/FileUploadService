@@ -4,6 +4,7 @@ export default async function handleUpload(currentstate, formData) {
     let data = new FormData();
     data.append('file', formData.get("myFile"));
     let report = "";
+    let response = null;
   
     try {
       // send request to backend and wait for the response
