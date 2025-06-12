@@ -1,13 +1,13 @@
+'use client'
+
 import { redirect } from "next/navigation";
 
 
-export default function HandleReport({ state }) {
+export default function HandleReport({ state, resetState }) {
 
-  const handleReset = () => {
+ function  handleReset() {
       // Reset the form state and clear the report
-      //setState = '';
-      redirect('/', 'push');
-      // Optionally, you can also clear the state if needed
+      resetState(state);
       
     };
   
@@ -19,7 +19,7 @@ export default function HandleReport({ state }) {
                     style={{
                       border: "1px solid black",
                       padding: "10px",
-                      marginTop: "100px",
+                      marginTop: "300px",
                     }}
                   >
                     <h3>Report</h3>

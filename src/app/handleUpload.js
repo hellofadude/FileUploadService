@@ -1,18 +1,26 @@
 "use server"
 
+import { redirect } from "next/navigation";
+
 export default async function handleUpload(currentstate, formData) {
-    let data = new FormData();
-    data.append('file', formData.get("myFile"));
-    let report = "";
-    let response = null;
-  
+  let report = "";
+
+  if (currentstate !== "" ) {
+    console.log("Resetting Form State");
+    currentstate = "";
+    redirect("/"); // Redirect to the home page if currentstate is not empty
+
+  } else {
+    let logInfo = new FormData();
+    logInfo.append('file', formData.get("myFile"));
+      
     try {
       // send request to backend and wait for the response
-      response =  await fetch("http://127.0.0.1:8080", {
+      const response =  await fetch("http://127.0.0.1:8080", {
           mode: "no-cors",
           method: "POST",
           // Data will be serialized and sent as json
-          body: data,
+          body: logInfo, // if no file is selected, send the current state
           // tell the server we're sending JSON
       }).then(response => {
         if (!response.ok) {
@@ -20,9 +28,7 @@ export default async function handleUpload(currentstate, formData) {
         }
         return response.json();
       }).then(data => {
-        report  =  data;
-        
-        
+        report  =  data;      
       }).catch(error => {
         console.error('Error:', error);
       })
@@ -30,5 +36,7 @@ export default async function handleUpload(currentstate, formData) {
       console.log("An error occured", error)// an error occured
     }
 
+  }
+  
     return report;
   }
